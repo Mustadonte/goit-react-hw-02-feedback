@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export const FeedbackOptions = ({ options, onClick }) => {
   return (
     <div>
@@ -14,4 +15,8 @@ export const FeedbackOptions = ({ options, onClick }) => {
       </ul>
     </div>
   );
+};
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.array.isRequired,
 };
