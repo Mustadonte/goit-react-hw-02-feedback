@@ -27,26 +27,32 @@ export class App extends Component {
   countPositiveFeedbackPercentage = () => {
     const goodFeedback = Number(this.state.good);
     const percentageResult = (goodFeedback / this.countTotalFeedback()) * 100;
-    return percentageResult.toFixed(0);
+    return Number(percentageResult.toFixed(0));
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
     const feedbacksTotal = this.countTotalFeedback();
     const options = Object.keys(this.state);
     return (
-      <Section title="Please, leave your feedback">
-        <FeedbackOptions options={options} onClick={this.onLeaveFeedback} />
-        {isNaN(this.countPositiveFeedbackPercentage()) ? (
-          <Notification message="There is no feedback" />
-        ) : (
-          <Statistics
-            options={options}
-            data={this.state}
-            total={feedbacksTotal}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
-          />
-        )}
-      </Section>
+      <>
+        <Section title="Please, leave your feedback">
+          <FeedbackOptions options={options} onClick={this.onLeaveFeedback} />
+        </Section>
+        <Section title="Statistics">
+          {isNaN(this.countPositiveFeedbackPercentage()) ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={feedbacksTotal}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </Section>
+      </>
     );
   }
 }
